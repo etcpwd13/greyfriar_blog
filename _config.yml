@@ -59,7 +59,7 @@ plugins:
 
 author:
   name   : "Nate W"
-  avatar : "/assets/images/greyfriar.jfif"
+  avatar : "/assets/images/friar.jfif"
   bio    : "My awesome biography constrained to a sentence or two goes here."
   links:
     - label: "Website"
