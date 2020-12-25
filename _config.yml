@@ -58,9 +58,9 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "Nate W"
+  name   : "GREYFRIAR"
   avatar : "/assets/images/friar.jfif"
-  bio    : "My awesome biography constrained to a sentence or two goes here."
+  bio    : "Tinker, Father, Soldier, Professor, Cyber, Husband."
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
