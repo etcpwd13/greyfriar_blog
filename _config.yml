@@ -58,8 +58,8 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "Nate VonWeilbach"
-  avatar : "/assets/images/bio-photo.jpg"
+  name   : "Nate W"
+  avatar : "/assets/images/greyfriar.jfif"
   bio    : "My awesome biography constrained to a sentence or two goes here."
   links:
     - label: "Website"
