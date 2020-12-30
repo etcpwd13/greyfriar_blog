@@ -1,5 +1,6 @@
 ---
 title: "Post: NMAP Commands"
+date: 2020-12-28T11:34:30-04:00
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
