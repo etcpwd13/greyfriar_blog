@@ -12,8 +12,11 @@ I signed up for Hack the Box last night. In order to get an invite code from the
 
 You can follow the video for how to do it [here][howto-video]
 1. Open [Developers console] [dev-console]
+
 2. Find and run the suspicious java script by making a cop of it and using the script name() in console to run it. you will get some encoded string that needs decoding
+
 3. Go to this [Decode site][decode-site]
+
 4.Finally the decoded message ask you to submity a POST request to the site API. use online [Post site][post-site] to do this!
 
 Once I was signed up I had to download some VM and VPN software to access the lab network
