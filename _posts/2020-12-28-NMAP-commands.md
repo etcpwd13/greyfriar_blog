@@ -24,7 +24,7 @@ ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.27 | grep ^[0-9] | cut -d '/' -f 1
 
 The results from the above command lookeed like this:
 
----yaml
+```yaml
 Starting Nmap 7.91 ( https://nmap.org ) at 2020-12-30 14:31 EST
 Nmap scan report for 10.10.10.27
 Host is up (0.070s latency).
@@ -90,4 +90,4 @@ Host script results:
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 66.18 seconds
----
+```
