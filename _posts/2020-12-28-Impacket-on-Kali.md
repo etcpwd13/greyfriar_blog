@@ -5,7 +5,6 @@ excerpt_separator: "<!--more-->"
 categories:
   - Blog
 tags:
-  - Impackets
   - tool
   - commands
   - enumeration
