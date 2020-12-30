@@ -2,7 +2,7 @@
 title: "Welcome to GreyFriar Chronicals on Jekyll!"
 date: 2020-12-24T15:34:30-04:00
 categories:
-  - blog
+  - Blog
 tags:
   - Jekyll
   - update
