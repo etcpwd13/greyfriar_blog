@@ -2,7 +2,7 @@
 title: "Signed up for Hack The Box"
 date: 2020-12-28T15:34:30-04:00
 categories:
-  - blog
+  - Blog
 tags:
   - hackTheBox
   - update
