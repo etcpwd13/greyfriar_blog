@@ -4,8 +4,9 @@ date: 2020-12-28T17:34:30-04:00
 categories:
   - Blog
 tags:
+  - tool
+  - CURL
   - link
-  - Post Formats
 link: http://www.compciv.org/recipes/cli/downloading-with-curl/
 ---
 
