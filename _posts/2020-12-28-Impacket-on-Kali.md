@@ -37,7 +37,7 @@ sudo pip3 install -r /opt/impacket/requirements.txt
 4. Change to the "/opt/impact" folder:
 
 ```yaml
-cd /opy/impacket
+cd /opt/impacket
 ```
 
 5. Finally Run the install in that folder:
