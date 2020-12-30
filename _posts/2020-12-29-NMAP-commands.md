@@ -1,13 +1,14 @@
 ---
-title: "Post: NMAP Commands"
+title: "Enumeration: NMAP Commands"
 date: 2020-12-28T11:34:30-04:00
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
 tags:
-  - NMAP Commands
-  - readability
-  - standard
+  - NMAP
+  - tool
+  - commands
+  - enumeration
 ---
 
 Here are some Nmap usage examples, from the simple and routine to a little more complex and esoteric. Some actual IP addresses and domain names are used to make things more concrete. In their place you should substitute addresses/names from your own network. While I don't think port scanning other networks is or should be illegal, some network administrators don't appreciate unsolicited scanning of their networks and may complain. Getting permission first is the best approach.
