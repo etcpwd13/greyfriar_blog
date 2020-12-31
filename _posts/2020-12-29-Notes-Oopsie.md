@@ -111,4 +111,4 @@ http://10.10.10.28/cdn-cgi/login/admin.php?content=uploads
 Now I wanty to try and upload a PHP reverse shell
 
 **Reverse Shell**
-
+Locate PHP reverse shell from http://pentestmonkey.net/tools/web-shells/php-reverse-shell
