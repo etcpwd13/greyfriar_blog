@@ -43,6 +43,7 @@ Two Ports open SSH and Web
 Using a web browser connect to the IP and look around. None of the menu links work but at the bottom of the home page it speaks about login but no page for that. Use BURP proxy to take a look at web traffic.
 
 **BURP**
+
 Using BURP and its uilt in browser no need to configure external browser.
   open web site and in BURP click :Forward" button on the Proxy tab until the page opens up:
   Switch to the :Target" tab and you see a folder tree under the Web IP for "CDN-CGI\login" add that to url path in browser and hit enter:
