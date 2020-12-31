@@ -1,27 +1,30 @@
-# Minimal Mistakes remote theme starter
+# GreyFriar's Blog [![npm version](https://badge.fury.io/js/stupidly-simple-blog.svg)](https://badge.fury.io/js/stupidly-simple-blog)
 
-Click [**Use this template**](https://github.com/mmistakes/mm-github-pages-starter/generate) button above for the quickest method of getting started with the [Minimal Mistakes Jekyll theme](https://github.com/mmistakes/minimal-mistakes).
+A really simple gem blog using jekell and GH pahes
 
-Contains basic configuration to get you a site with:
+![Sample](https://cloud.githubusercontent.com/assets/175278/22441507/9525f26c-e72f-11e6-877e-67b83101c1a7.gif)
 
-- Sample posts.
-- Sample top navigation.
-- Sample author sidebar with social links.
-- Sample footer links.
-- Paginated home page.
-- Archive pages for posts grouped by year, category, and tag.
-- Sample about page.
-- Sample 404 page.
-- Site wide search.
+## Another markdown blog project!?
+I wanted to write a blog post, so naturally had to make something that'd turn markdown into html. Some requirements were:
 
-Replace sample content with your own and [configure as necessary](https://mmistakes.github.io/minimal-mistakes/docs/configuration/).
+* Watch mode
+* Compiled code blocks
+* No runtime scripts necessary
+* Themeable
+* Templates
 
----
+## Usage
+```
+  $ <filename>
 
-## Troubleshooting
+  Options
+    --template, -t  The template file to use (must be handlebars)
+    --watch, -w  Watch files for changes
+    --stdout, -s  Output the html to stdout
+    --output, -o  The .html file name (will be written to if stdout not specified)
+    --title, -t  The title for the html file (filename used instead)
 
-If you have a question about using Jekyll, start a discussion on the [Jekyll Forum](https://talk.jekyllrb.com/) or [StackOverflow](https://stackoverflow.com/questions/tagged/jekyll). Other resources:
-
-- [Ruby 101](https://jekyllrb.com/docs/ruby-101/)
-- [Setting up a Jekyll site with GitHub Pages](https://jekyllrb.com/docs/github-pages/)
-- [Configuring GitHub Metadata](https://github.com/jekyll/github-metadata/blob/master/docs/configuration.md#configuration) to work properly when developing locally and avoid `No GitHub API authentication could be found. Some fields may be missing or have incorrect data.` warnings.
+  Example
+    $ simple-blog my-amazing-post.md
+    $ simple-blog --watch --template main.mustache my-amazing-post.md
+```
