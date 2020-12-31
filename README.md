@@ -15,16 +15,35 @@ I wanted to write a blog post, so naturally had to make something that'd turn ma
 
 ## Usage
 ```
-  $ <filename>
+  ---
+title: "Welcome to GreyFriar Chronicals on Jekyll!"
+date: 2020-12-24T15:34:30-04:00
+categories:
+  - Blog
+tags:
+  - Jekyll
+  - update
+---
 
-  Options
-    --template, -t  The template file to use (must be handlebars)
-    --watch, -w  Watch files for changes
-    --stdout, -s  Output the html to stdout
-    --output, -o  The .html file name (will be written to if stdout not specified)
-    --title, -t  The title for the html file (filename used instead)
+You'll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-  Example
-    $ simple-blog my-amazing-post.md
-    $ simple-blog --watch --template main.mustache my-amazing-post.md
+To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+
+Jekyll also offers powerful support for code snippets:
+
+```ruby
+def print_hi(name)
+  puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=> prints 'Hi, Tom' to STDOUT.
 ```
+
+Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+
+
+
+```
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
