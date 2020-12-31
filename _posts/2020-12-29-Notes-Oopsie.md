@@ -55,7 +55,44 @@ Using that Admin user name and Password from ARCHETYPE works and we get the admi
 http://10.10.10.28/cdn-cgi/login/admin.php
 ```
 
-Look aroun that page:
+Look around that page:
 
+  The uploads page says that "super admin" is needed to access but I am logged in as only Admin
+  
+  ```yaml
+  http://10.10.10.28/cdn-cgi/login/admin.php?content=uploads
+  ```
+  
+  Using BURP proxy again turn ON Intercept and capture the account page to get the user ID
+  Send the page to intruder:
+  
+  Clear all the automatic set variables with the Cler button and highlight the id=1 then click add to gt this
+  
+  ```yaml
+  GET /cdn-cgi/login/admin.php?content=accounts&id=§1§ HTTP/1.1
+
+Host: 10.10.10.28
+
+Upgrade-Insecure-Requests: 1
+```
+
+Click the Payloads tab and we want to try id=1-100 so we got to list 1-100 numbers in the shell with
+
+```yaml
+for i in {1..100}
+do
+ # your-unix-command-here
+ echo $i
+done
+```
+
+Highlight the numbers 1-100 in the shell - Copy and then in BURP click Paste to add them to the Payloads section:
+
+Clicl Options and scroll to bottom to the Redections section:
+1. click always radio
+2. check Process cookies in redirections
+  
+  
+  
   
 
