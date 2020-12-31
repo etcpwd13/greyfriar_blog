@@ -8,6 +8,7 @@ tags:
   - tool
   - commands
   - enumeration
+  - impacket
 ---
 
 ## Installing Impacket on Kali Linux 2020
