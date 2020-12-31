@@ -171,3 +171,47 @@ bin
 boot
 cdrom
 ```
+Grab local info
+```yaml
+$ cd home
+$ ls
+robert
+$ cd robert
+$ ls
+user.txt
+$ cat user.txt
+f2c74ee8db7983851ab2a96a44eb7981
+$ whoami
+www-data
+```
+
+kernal version - Linux oopsie 4.15.0-76-generic #86-Ubuntu SMP Fri Jan 17 17:24:28 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux:
+
+Check exploit DB - searchsploit
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ searchsploit Linux Kernel 4.15.0
+------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                     |  Path
+------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Linux Kernel (Solaris 10 / < 5.10 138888-01) - Local Privilege Escalation                                          | solaris/local/15962.c
+Linux Kernel 2.4/2.6 (RedHat Linux 9 / Fedora Core 4 < 11 / Whitebox 4 / CentOS 4) - 'sock_sendpage()' Ring0 Privi | linux/local/9479.c
+Linux Kernel 4.10 < 5.1.17 - 'PTRACE_TRACEME' pkexec Local Privilege Escalation                                    | linux/local/47163.c
+Linux Kernel 4.15.x < 4.19.2 - 'map_write() CAP_SYS_ADMIN' Local Privilege Escalation (cron Method)                | linux/local/47164.sh
+Linux Kernel 4.15.x < 4.19.2 - 'map_write() CAP_SYS_ADMIN' Local Privilege Escalation (dbus Method)                | linux/local/47165.sh
+Linux Kernel 4.15.x < 4.19.2 - 'map_write() CAP_SYS_ADMIN' Local Privilege Escalation (ldpreload Method)           | linux/local/47166.sh
+Linux Kernel 4.15.x < 4.19.2 - 'map_write() CAP_SYS_ADMIN' Local Privilege Escalation (polkit Method)              | linux/local/47167.sh
+Linux Kernel 4.8.0 UDEV < 232 - Local Privilege Escalation                                                         | linux/local/41886.c
+Linux Kernel < 4.15.4 - 'show_floppy' KASLR Address Leak                                                           | linux/local/44325.c
+Linux Kernel < 4.16.11 - 'ext4_read_inline_data()' Memory Corruption                                               | linux/dos/44832.txt
+Linux Kernel < 4.17-rc1 - 'AF_LLC' Double Free                                                                     | linux/dos/44579.c
+------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+```
+
+Check open ports that may not be visable from outside"
+
+netstat -antup - showm myswl port 3306 listening
+
+
+
