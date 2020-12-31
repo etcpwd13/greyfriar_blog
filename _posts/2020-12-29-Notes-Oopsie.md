@@ -88,11 +88,18 @@ done
 
 Highlight the numbers 1-100 in the shell - Copy and then in BURP click Paste to add them to the Payloads section:
 
-Clicl Options and scroll to bottom to the Redections section:
+Click Options and scroll to bottom to the Redections section:
 1. click always radio
 2. check Process cookies in redirections
   
-  
+Click Target Tab and click Start Attack Button: the length field shows that responce text is different than others so taking a look at the ones with different length shows number 30 is "super admin" by choosing it with Response Tb anf RAW selected:
+
+```yaml
+<br /><br /><center><h1>Repair Management System</h1><br /><br />
+<table><tr><th>Access ID</th><th>Name</th><th>Email</th></tr><tr><td>86575</td><td>super admin</td><td>superadmin@megacorp.com</td></tr></table<script src='/js/jquery.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+</body>
+```
   
   
 
