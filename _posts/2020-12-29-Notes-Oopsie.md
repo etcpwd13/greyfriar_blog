@@ -16,7 +16,7 @@ tags:
 
 Here are notes from the named target:
 
-*Enumeration - Ports 445 and 1433 are open, which are associated with file sharing (SMB) and SQL Server.
+*Enumeration* - Ports 445 and 1433 are open, which are associated with file sharing (SMB) and SQL Server.
 Linux - 10.10.10.28
 ```yaml
 ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.27 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
@@ -38,4 +38,14 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 Two Ports open SSH and Web
 
-*Enumerate the Web port - MegaCorpAutomotive
+*Enumerate* the Web port 80 - MegaCorpAutomotive
+
+Using a web browser connect to the IP and look around. None of the menu links work but at the bottom of the home page it speaks about login but no page for that. Use BURP proxy to take a look at web traffic.
+
+**BURP**
+Using BURP and its uilt in browser no need to configure external browser.
+  open web site and in BURP click :Forward" button on the Proxy tab until the page opens up:
+  Switch to the :Target" tab and you see a folder tree under the Web IP for "CDN-CGI\login" add that to url path in browser and hit enter:
+  back in BURP on the Proxy Tab click Forward to get to the Login Screen
+  
+
