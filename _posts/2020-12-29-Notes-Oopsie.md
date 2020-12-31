@@ -9,14 +9,14 @@ tags:
   - update
   - nmap
   - impacket
-  - smbclient
+  - BURP
   - reverse shell
   - PE
 ---
 
 Here are notes from the named target:
 
-1. Enumeration - Ports 445 and 1433 are open, which are associated with file sharing (SMB) and SQL Server.
+*Enumeration - Ports 445 and 1433 are open, which are associated with file sharing (SMB) and SQL Server.
 Linux - 10.10.10.28
 ```yaml
 ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.27 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
@@ -36,6 +36,6 @@ PORT   STATE SERVICE VERSION
 |_http-title: Welcome
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
-Two Ports open SSh and Web
+Two Ports open SSH and Web
 
-2. Enumerate the Web port - MegaCorpAutomotive
+*Enumerate the Web port - MegaCorpAutomotive
