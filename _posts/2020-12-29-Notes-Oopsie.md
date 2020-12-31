@@ -213,5 +213,20 @@ Check open ports that may not be visable from outside"
 
 netstat -antup - showm myswl port 3306 listening
 
+**UPGRADE SHELL**
 
+If you pop a shell from a web server you are most likely in as "www-data" and the shell is not good to use as a full featured one:
+
+Upgrafe shell with running these commands all at once:
+
+```yaml
+SHELL=/bin/bash script -q /dev/null
+Ctrl-Z
+stty raw -echo
+fg
+reset
+xterm
+```
+
+You may have to answer a question for termanal type so enter "xterm" and/or hit return several times 
 
