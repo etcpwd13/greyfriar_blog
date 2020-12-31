@@ -8,10 +8,8 @@ tags:
   - oopsie
   - update
   - nmap
-  - impacket
+  - pwd
   - BURP
-  - reverse shell
-  - PE
 ---
 
 Here are notes from the named target:
