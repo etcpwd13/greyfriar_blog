@@ -12,6 +12,7 @@ tags:
   - smbclient
   - reverse shell
   - PE
+  - pwd
 ---
 
 Here are notes from the named target:
@@ -94,8 +95,14 @@ type C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\Co
 ```
 
 That history file shows that the administrator account was used to map a drive to T:\ and what the password was.
+
+From the "ARCHTYPE" box we learned that their was an Administrator/Admin account that used the Password: MEGACORP_4dm1n!!
+
 This reveals that the backups drive has been mapped using the local administrator credentials. We can use Impacket's psexec.py to gain a privileged shell.
 
 Finally we can use psexec.py from Impacket to connect to the server as Administrator useing the password found in the above step and het the root target hash
+
+ Administrator/Admin account that used the Password: MEGACORP_4dm1n!!
+
 
 
