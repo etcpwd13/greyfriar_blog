@@ -1,8 +1,9 @@
 ---
-title: "Post: Using CURL to Download"
+title: "Tool: Using CURL to Download"
 date: 2020-12-28T17:34:30-04:00
 categories:
   - Blog
+  - Tool
 tags:
   - tool
   - CURL
