@@ -101,5 +101,14 @@ Click Target Tab and click Start Attack Button: the length field shows that resp
 </body>
 ```
   
-  
+Use the ID 86575 as the ID value in an uploads page and get access to upload a file.
+that gets access to the uploads page
+
+```yaml
+http://10.10.10.28/cdn-cgi/login/admin.php?content=uploads
+```
+
+Now I wanty to try and upload a PHP reverse shell
+
+**Reverse Shell**
 
