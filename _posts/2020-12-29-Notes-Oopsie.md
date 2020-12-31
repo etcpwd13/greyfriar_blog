@@ -47,6 +47,17 @@ Using a web browser connect to the IP and look around. None of the menu links wo
 Using BURP and its uilt in browser no need to configure external browser.
   open web site and in BURP click :Forward" button on the Proxy tab until the page opens up:
   Switch to the :Target" tab and you see a folder tree under the Web IP for "CDN-CGI\login" add that to url path in browser and hit enter:
-  back in BURP on the Proxy Tab click Forward to get to the Login Screen
+  back in BURP on the Proxy Tab click Forward to get to the Login Screen:
+  
+From the "ARCHTYPE" box we learned that their was an Administrator/Admin account that used the Password: MEGACORP_4dm1n!!
+
+Using that Admin user name and Password from ARCHETYPE works and we get the admin page
+
+```yaml
+http://10.10.10.28/cdn-cgi/login/admin.php
+```
+
+Look aroun that page:
+
   
 
