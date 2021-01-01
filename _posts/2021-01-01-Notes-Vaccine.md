@@ -126,7 +126,7 @@ The credentials ftpuser / mc@F1l3ZilL4 can be used to login to the FTP server.
 
 ***lessons learned*** is do post exploit recon for user names and passwords:
 
-Logged in and used FTP GET command to download the file that was there "backup.zip"
+Logged in and used FTP GET command to download the file that was there "backup.zip" and use find command to see where it was downloaded to:
 
 ```yaml
 find / -type f -name backup.zip 2>/dev/null  
@@ -142,8 +142,27 @@ PK     "WCP�A:�"
         index.phpUT     ��7^��7^ux
 ```
 
+Use "unzip" to decompress but file is pass protected:
 
-      
-      
+```yaml
+                                                                        
+┌──(kali㉿kali)-[~]
+└─$ unzip backup.zip                                                                             3 ⚙
+Archive:  backup.zip
+[backup.zip] index.php password: 
 
+```
+
+Going to use "fcrackzip"  -> https://installlion.com/kali/kali/main/f/fcrackzip/install/index.html
+
+```yaml
+(kali㉿kali)-[~]
+└─$ fcrackzip -u -D -p /usr/share/wordlists/rockyou.txt backup.zip                               3 ⚙
+
+
+PASSWORD FOUND!!!!: pw == 741852963
+
+```
+
+Note: Rockyoy may have to be unpacked on kali as it is a gz by default - This took less than one second to find the password.
 
