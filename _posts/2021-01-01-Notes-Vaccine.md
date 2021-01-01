@@ -168,3 +168,29 @@ PASSWORD FOUND!!!!: pw == 741852963
 
 Note: Rockyoy may have to be unpacked on kali as it is a gz by default - This took less than one second to find the password.
 
+Using that password back to unzip the backup.zip file and we get two files:
+
+Cat the index.php and see a MD5 hash for a Admin password:
+
+```yaml
+PASSWORD FOUND!!!!: pw == 741852963
+                                                                                                     
+┌──(kali㉿kali)-[~]
+└─$ unzip backup.zip                                                                             3 ⚙
+Archive:  backup.zip
+[backup.zip] index.php password: 
+  inflating: index.php               
+  inflating: style.css               
+                                                                                                     
+┌──(kali㉿kali)-[~]
+└─$ cat index.php                                                                                3 ⚙
+<!DOCTYPE html>
+<?php
+session_start();
+  if(isset($_POST['username']) && isset($_POST['password'])) {
+    if($_POST['username'] === 'admin' && md5($_POST['password']) === "2cb42f8734ea607eefed3b70af13bbd3") {
+      $_SESSION['login'] = "true";
+      header("Location: dashboard.php");
+```
+
+
