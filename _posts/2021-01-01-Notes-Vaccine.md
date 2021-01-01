@@ -8,6 +8,8 @@ tags:
   - vaccine
   - update
   - Linux
+  - fcrackzip
+  - ftp
 ---
 
 Here are notes from the named target:
