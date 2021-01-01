@@ -1,5 +1,5 @@
 ---
-title: "Tool Link: Web Dir Search"
+title: "Tool: Web Dir Search"
 date: 2020-12-30T10:34:30-04:00
 categories:
   - Blog
