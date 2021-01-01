@@ -1,6 +1,6 @@
 ---
 title: "Tool: Upgrade Terminal"
-date: 2020-12-39T14:34:30-04:00
+date: 2020-12-31T14:34:30-04:00
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
