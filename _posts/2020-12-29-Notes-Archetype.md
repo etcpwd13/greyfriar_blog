@@ -10,9 +10,10 @@ tags:
   - nmap
   - impacket
   - smbclient
-  - webshell
+  - SQL Server
   - PE
   - password
+  - Windows
 ---
 
 Here are notes from the named target:
