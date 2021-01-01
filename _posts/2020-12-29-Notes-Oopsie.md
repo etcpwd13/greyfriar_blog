@@ -6,6 +6,7 @@ categories:
   - Writeup
 tags:
   - oopsie
+  - Linux
   - update
   - nmap
   - passwords
