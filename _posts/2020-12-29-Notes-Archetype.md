@@ -3,7 +3,7 @@ title: "Writeup: Archetype"
 date: 2020-12-29T9:34:30-04:00
 categories:
   - Blog
-  - Notes
+  - Writeup
 tags:
   - archetype
   - update
