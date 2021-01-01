@@ -124,4 +124,26 @@ Take a look at the writeup and see that it references an account and password fr
 The credentials ftpuser / mc@F1l3ZilL4 can be used to login to the FTP server.
 ```
 
-***lessons learned*** is do post exploit recon for user names and passwords
+***lessons learned*** is do post exploit recon for user names and passwords:
+
+Logged in and used FTP GET command to download the file that was there "backup.zip"
+
+```yaml
+find / -type f -name backup.zip 2>/dev/null  
+```
+
+cat the file to show it is PK zip and contains a file "index.php" in it abut may hav other files
+
+```yaml
+                                                                                                     
+┌──(kali㉿kali)-[~]
+└─$ cat backup.zip                                                                               3 ⚙
+PK     "WCP�A:�"
+        index.phpUT     ��7^��7^ux
+```
+
+
+      
+      
+
+
