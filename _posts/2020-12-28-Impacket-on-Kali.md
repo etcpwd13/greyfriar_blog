@@ -1,5 +1,5 @@
 ---
-title: "Enumeration: Impackets Install"
+title: "Enumeration Tool: Impackets Install"
 date: 2020-12-28T14:34:30-04:00
 excerpt_separator: "<!--more-->"
 categories:
