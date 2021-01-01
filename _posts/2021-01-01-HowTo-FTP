@@ -1,0 +1,19 @@
+FTP is interactive and needs you to supply credentials when prompted
+
+you can't exactly pip in FTP creds with a command line option, but what you can do is redirect stdin like so:
+
+$ ftp -n ftp.backupte4.rsyncbackup.info << EOF
+> quote USER bapte
+> quote PASS b2p7Ua2
+> put somefile  <-- this is the command you want to execute
+> quit
+> EOF
+or you can put it in a script:
+
+#!/bin/sh
+ftp -n ftp.backupte4.rsyncbackup.info << EOF
+quote USER bapte
+quote PASS b2p7Ua2
+put somefile
+quit
+EOF
