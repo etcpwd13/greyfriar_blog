@@ -10,9 +10,9 @@ tags:
   - nmap
   - impacket
   - smbclient
-  - reverse shell
+  - webshell
   - PE
-  - pwd
+  - password
 ---
 
 Here are notes from the named target:
