@@ -56,7 +56,7 @@ Nmap done: 1 IP address (1 host up) scanned in 9.60 seconds
 So Linux server target has 3 services 
 
 1. FTP
-2. SSH
+2. SSH (We will use this for shell once we get a user and pass)
 3. HTTP
 
 First I want to activally connect to the 3 services:
@@ -370,6 +370,39 @@ postgres@vaccine:~$
 
 Turns out that is not the correct user.txt but the user account and password for postgres can be used to see privs
 
+SSH Server
+
+Login with this creds 'user=postgres password=P@s5w0rd!'
+
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ ssh postgres@10.10.10.46                                     1 ⚙
+postgres@10.10.10.46's password: 
+Welcome to Ubuntu 19.10 (GNU/Linux 5.3.0-29-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sat 02 Jan 2021 08:42:36 AM UTC
+
+  System load:  0.0                Processes:             180
+  Usage of /:   32.0% of 19.56GB   Users logged in:       0
+  Memory usage: 18%                IP address for ens160: 10.10.10.46
+  Swap usage:   0%
+
+
+47 updates can be installed immediately.
+0 of these updates are security updates.
+To see these additional updates run: apt list --upgradable
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release. Check your Internet connection or proxy settings
+
+
+Last login: Sat Jan  2 07:22:44 2021 from 10.10.14.135
+postgres@vaccine:~$ 
+
+```
 This password can be used to view the user's sudo privileges. *sudo -l*
 
 ```yaml
