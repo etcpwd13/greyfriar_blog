@@ -27,7 +27,13 @@ Let's upgrade to a tty shell and continue enumeration.
 SHELL=/bin/bash script -q /dev/null
 ```
 
-Notes for general upgrading terminal are here:
+If the target has python installed you can upgrade shell with this:
+
+```yaml
+python3 -c "import pty;pty.spawn{'/bin/bash'}"
+```
+
+Additional Notes for general upgrading terminal are here:
 
 [Upgrade a Dumb Shell to a Fully Interactive Shell for More Flexibility][upgrade-term]
 
