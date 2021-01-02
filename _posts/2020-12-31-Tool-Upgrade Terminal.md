@@ -21,7 +21,13 @@ reset
 xterm
 ```
 
-Notes for general pugrading terminal are here:
+Let's upgrade to a tty shell and continue enumeration.
+
+```yaml
+SHELL=/bin/bash script -q /dev/null
+```
+
+Notes for general upgrading terminal are here:
 
 [Upgrade a Dumb Shell to a Fully Interactive Shell for More Flexibility][upgrade-term]
 
