@@ -5,6 +5,9 @@ categories:
   - Blog
 tags:
   - hackTheBox
+  - base64 decode
+  - rot13
+  - Online POST
   - update
 ---
 
