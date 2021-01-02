@@ -30,7 +30,7 @@ SHELL=/bin/bash script -q /dev/null
 If the target has python installed you can upgrade shell with this:
 
 ```yaml
-python3 -c "import pty;pty.spawn{'/bin/bash'}"
+python3 -c "import pty;pty.spawn('/bin/bash')"
 ```
 
 Additional Notes for general upgrading terminal are here:
