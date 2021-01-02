@@ -8,6 +8,7 @@ tags:
   - shell
   - tool
   - commands
+  - cheatsheet
   - SQL
   - sqlmap
 ---
