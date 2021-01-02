@@ -15,6 +15,11 @@ tags:
 admin : P@s5w0rd!
 sql_svc : M3g4c0rp123
 administrator : MEGACORP_4dm1n!!
-robert : Writeup: Vaccine
+robert : M3g4C0rpUs3r!
+ftpuser : mc@F1l3ZilL4
+admin : qwerty789
+potgres : P@s5w0rd!
+```
+
  
 
