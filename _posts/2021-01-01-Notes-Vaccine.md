@@ -194,9 +194,9 @@ session_start();
       header("Location: dashboard.php");
 ```
 
-used [CrackStation][https://crackstation.net/] on the MD5 hash
-```yaml
+used [CrackStation][post-site] on the MD5 hash:
 
+```yaml
 Hash	Type	Result
 2cb42f8734ea607eefed3b70af13bbd3	md5	qwerty789
 Color Codes: Green: Exact match, Yellow: Partial match, Red: Not found.
@@ -204,3 +204,16 @@ Color Codes: Green: Exact match, Yellow: Partial match, Red: Not found.
 Download CrackStation's Wordlist
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+[post-site]: https://crackstation.net/
