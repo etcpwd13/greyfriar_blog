@@ -214,12 +214,4 @@ meterpreter >
 
 
 
-
-
-
-
-
-
-
-
-https://www.hackingarticles.in/wordpress-reverse-shell/[msf6-commands]:  
+[msf6-commands]: https://www.hackingarticles.in/wordpress-reverse-shell/
