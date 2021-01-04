@@ -166,6 +166,18 @@ Password attack with WPScan is possible but time consuming:
 ```
 Searchsploit  for WordPress version 5.2.1 found no exploits looking in google - nothing in google:
 
+I signed up for the free wpscan API and added that to my host. then reran wpscan
+
+Basically it showed 25 vulnerabilities but as we have admin access without launching going to use msf6
+
+```yaml
+P@s5w0rd!
+```
+
+
+
+
+
 Running SQLMAP:
 
 ```yaml
