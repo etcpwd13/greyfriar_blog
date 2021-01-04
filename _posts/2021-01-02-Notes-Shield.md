@@ -12,7 +12,6 @@ tags:
   - nikto
   - wpscan
   - sqlmap
-  
 ---
 
 Here are notes from the named target:
