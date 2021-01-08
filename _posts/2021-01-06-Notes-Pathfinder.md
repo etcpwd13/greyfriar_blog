@@ -5,7 +5,7 @@ categories:
   - Blog
   - Writeup
 tags:
-  - spathfinder
+  - pathfinder
   - update
   - Windows
   - nmap
@@ -17,6 +17,8 @@ tags:
   - impackets
   - john
   - GetNPUser
+  - evil-winRM
+  - psexec.py
 ---
 
 Here are notes from the named target:
