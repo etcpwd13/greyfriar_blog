@@ -1,5 +1,5 @@
 ---
-title: "Writeup: pathfinder"
+title: "Writeup: Pathfinder"
 date: 2021-01-02T03:34:30-04:00
 categories:
   - Blog
@@ -229,6 +229,44 @@ INFO: Done in 00M 09S
 
 ```
 Looks like we got info on several accounts sandrs, svc_bes, and administrator
+
+Time to start up bloodhound - I already installed it:
+
+```yaml
+sudo neo4j start                                                                                                                                           1 ⨯
+[sudo] password for kali: 
+Directories in use:
+  home:         /usr/share/neo4j
+  config:       /usr/share/neo4j/conf
+  logs:         /usr/share/neo4j/logs
+  plugins:      /usr/share/neo4j/plugins
+  import:       /usr/share/neo4j/import
+  data:         /usr/share/neo4j/data
+  certificates: /usr/share/neo4j/certificates
+  run:          /usr/share/neo4j/run
+Starting Neo4j.
+WARNING: Max 1024 open files allowed, minimum of 40000 recommended. See the Neo4j manual.
+Started neo4j (pid 1740). It is available at http://localhost:7474/
+There may be a short delay until the server is ready.
+See /usr/share/neo4j/logs/neo4j.log for current status.
+```
+
+```yaml
+bloodhound --no-sandbox
+```
+this will start a browser windo. - clear out previous database and drag new files to window to load them
+
+
+Ensure you have a connection to the database; indicated by a ✔️ symbol at the top of the three input fields. The default username is neo4j with the password previously set.
+
+Opening BloodHound, we can drag and drop the .json files, and BloodHound will begin to analyze the data. We can select various queries, of which some very useful ones are:
+
+```yaml
+Shortest Paths to High value Targets 
+and Find Principles with DCSync Rights
+```
+
+
 
 
 
