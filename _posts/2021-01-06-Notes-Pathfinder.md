@@ -140,52 +140,7 @@ PORT    STATE SERVICE
 |       supportedLDAPPolicies: MaxValRangeTransitive
 |       supportedLDAPPolicies: ThreadMemoryLimit
 |       supportedLDAPPolicies: SystemMemoryLimitPercent
-|       supportedControl: 1.2.840.113556.1.4.319
-|       supportedControl: 1.2.840.113556.1.4.801
-|       supportedControl: 1.2.840.113556.1.4.473
-|       supportedControl: 1.2.840.113556.1.4.528
-|       supportedControl: 1.2.840.113556.1.4.417
-|       supportedControl: 1.2.840.113556.1.4.619
-|       supportedControl: 1.2.840.113556.1.4.841
-|       supportedControl: 1.2.840.113556.1.4.529
-|       supportedControl: 1.2.840.113556.1.4.805
-|       supportedControl: 1.2.840.113556.1.4.521
-|       supportedControl: 1.2.840.113556.1.4.970
-|       supportedControl: 1.2.840.113556.1.4.1338
-|       supportedControl: 1.2.840.113556.1.4.474
-|       supportedControl: 1.2.840.113556.1.4.1339
-|       supportedControl: 1.2.840.113556.1.4.1340
-|       supportedControl: 1.2.840.113556.1.4.1413
-|       supportedControl: 2.16.840.1.113730.3.4.9
-|       supportedControl: 2.16.840.1.113730.3.4.10
-|       supportedControl: 1.2.840.113556.1.4.1504
-|       supportedControl: 1.2.840.113556.1.4.1852
-|       supportedControl: 1.2.840.113556.1.4.802
-|       supportedControl: 1.2.840.113556.1.4.1907
-|       supportedControl: 1.2.840.113556.1.4.1948
-|       supportedControl: 1.2.840.113556.1.4.1974
-|       supportedControl: 1.2.840.113556.1.4.1341
-|       supportedControl: 1.2.840.113556.1.4.2026
-|       supportedControl: 1.2.840.113556.1.4.2064
-|       supportedControl: 1.2.840.113556.1.4.2065
-|       supportedControl: 1.2.840.113556.1.4.2066
-|       supportedControl: 1.2.840.113556.1.4.2090
-|       supportedControl: 1.2.840.113556.1.4.2205
-|       supportedControl: 1.2.840.113556.1.4.2204
-|       supportedControl: 1.2.840.113556.1.4.2206
-|       supportedControl: 1.2.840.113556.1.4.2211
-|       supportedControl: 1.2.840.113556.1.4.2239
-|       supportedControl: 1.2.840.113556.1.4.2255
-|       supportedControl: 1.2.840.113556.1.4.2256
-|       supportedControl: 1.2.840.113556.1.4.2309
-|       supportedControl: 1.2.840.113556.1.4.2330
-|       supportedControl: 1.2.840.113556.1.4.2354
-|       supportedCapabilities: 1.2.840.113556.1.4.800
-|       supportedCapabilities: 1.2.840.113556.1.4.1670
-|       supportedCapabilities: 1.2.840.113556.1.4.1791
-|       supportedCapabilities: 1.2.840.113556.1.4.1935
-|       supportedCapabilities: 1.2.840.113556.1.4.2080
-|       supportedCapabilities: 1.2.840.113556.1.4.2237
+<snip>
 |       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=MEGACORP,DC=LOCAL
 |       serverName: CN=PATHFINDER,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=MEGACORP,DC=LOCAL
 |       schemaNamingContext: CN=Schema,CN=Configuration,DC=MEGACORP,DC=LOCAL
@@ -358,7 +313,7 @@ Mode                LastWriteTime         Length Name
 
 
 *Evil-WinRM* PS C:\Users\svc_bes\Desktop> more user.txt
-b05fb166688a8603d970c6d033f637f1
+b05fb###############################################
 
 ```
 
@@ -441,7 +396,7 @@ C:\Users\Administrator\Desktop>dir
                2 Dir(s)  13,184,819,200 bytes free
 
 C:\Users\Administrator\Desktop>more root.txt
-ee613b2d048303e5fd4ac6647d944645
+ee613b2d###############################
 
 C:\Users\Administrator\Desktop>
 ```
