@@ -10,6 +10,8 @@ tags:
   - Windows
   - nmap
   - domain
+  - neo4j
+  - bloodhound-python
   - bloodhound
 ---
 
@@ -266,9 +268,14 @@ Shortest Paths to High value Targets
 and Find Principles with DCSync Rights
 ```
 
+We can see that the svc_bes has GetChangesAll privileges to the domain. This means that the account has the ability to request replication data from the domain controller, and gain sensitive information such as user hashes.
 
+We always look for accounts vuln to ASREPRoasting - In Bloodhound Analysis run the last query "Find AS-REP Roastable Users (DontReqPreAuth)"
+With those we can request their password TGT hash using:
 
-
+```yaml
+GetNPUsers.py megacorp.local/svc_bes -request -no-pass -dc-ip 10.10.10.30
+```
 
 
 
