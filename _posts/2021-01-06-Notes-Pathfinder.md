@@ -10,6 +10,7 @@ tags:
   - Windows
   - nmap
   - domain
+  - bloodhound
 ---
 
 Here are notes from the named target:
@@ -85,9 +86,149 @@ The LDAP service is running on a couple of ports. the spec for LDAP say it has t
 
 ```yaml
 nmap -sT -Pn -n --open 10.10.10.30 -p389 --script ldap-rootdse
+
+──(kali㉿kali)-[~]
+└─$ nmap -sT -Pn -n --open 10.10.10.30 -p389 --script ldap-rootdse
+
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-08 12:41 EST
+Nmap scan report for 10.10.10.30
+Host is up (0.053s latency).
+
+PORT    STATE SERVICE
+389/tcp open  ldap
+| ldap-rootdse: 
+| LDAP Results
+|   <ROOT>
+|       domainFunctionality: 7
+|       forestFunctionality: 7
+|       domainControllerFunctionality: 7
+|       rootDomainNamingContext: DC=MEGACORP,DC=LOCAL
+|       ldapServiceName: MEGACORP.LOCAL:pathfinder$@MEGACORP.LOCAL
+|       isGlobalCatalogReady: TRUE
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxPercentDirSyncRequests
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxBatchReturnMessages
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxDirSyncDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: MaxValRangeTransitive
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedControl: 1.2.840.113556.1.4.2090
+|       supportedControl: 1.2.840.113556.1.4.2205
+|       supportedControl: 1.2.840.113556.1.4.2204
+|       supportedControl: 1.2.840.113556.1.4.2206
+|       supportedControl: 1.2.840.113556.1.4.2211
+|       supportedControl: 1.2.840.113556.1.4.2239
+|       supportedControl: 1.2.840.113556.1.4.2255
+|       supportedControl: 1.2.840.113556.1.4.2256
+|       supportedControl: 1.2.840.113556.1.4.2309
+|       supportedControl: 1.2.840.113556.1.4.2330
+|       supportedControl: 1.2.840.113556.1.4.2354
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       supportedCapabilities: 1.2.840.113556.1.4.2237
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=MEGACORP,DC=LOCAL
+|       serverName: CN=PATHFINDER,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=MEGACORP,DC=LOCAL
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=MEGACORP,DC=LOCAL
+|       namingContexts: DC=MEGACORP,DC=LOCAL
+|       namingContexts: CN=Configuration,DC=MEGACORP,DC=LOCAL
+|       namingContexts: CN=Schema,CN=Configuration,DC=MEGACORP,DC=LOCAL
+|       namingContexts: DC=DomainDnsZones,DC=MEGACORP,DC=LOCAL
+|       namingContexts: DC=ForestDnsZones,DC=MEGACORP,DC=LOCAL
+|       isSynchronized: TRUE
+|       highestCommittedUSN: 90201
+|       dsServiceName: CN=NTDS Settings,CN=PATHFINDER,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=MEGACORP,DC=LOCAL
+|       dnsHostName: Pathfinder.MEGACORP.LOCAL
+|       defaultNamingContext: DC=MEGACORP,DC=LOCAL
+|       currentTime: 20210109014934.0Z
+|_      configurationNamingContext: CN=Configuration,DC=MEGACORP,DC=LOCAL
+Service Info: Host: PATHFINDER; OS: Windows
+
 ```
 
+This is a DC and we have credentials to MEGACORP.Local from the Shield system we can use an AD enumeration tool called [bloodhound to get AD info.][blood-info]
+Using the credentials we obtained in a previous machine; sandra:Password1234!, we can attempt to enumerate Active Directory. We can achieve this using BloodHound. There is a python bloodhound injester, which can be found here. It can also be installed using pip: pip install bloodhound:
 
+## This is the collector for bloodhound ##
+
+```yaml
+┌──(kali㉿kali)-[~/Targets/pathfinder]
+└─$ bloodhound-python -c all -u sandra -p Password1234! -ns 10.10.10.30 -d megacorp.local -gc pathfinder.megacorp.local -v
+DEBUG: Authentication: username/password
+DEBUG: Resolved collection methods: acl, group, rdp, psremote, trusts, session, objectprops, localadmin, dcom
+DEBUG: Using DNS to retrieve domain information
+DEBUG: Querying domain controller information from DNS
+DEBUG: Using domain hint: megacorp.local
+INFO: Found AD domain: megacorp.local
+DEBUG: Found primary DC: Pathfinder.MEGACORP.LOCAL
+DEBUG: Found Global Catalog server: Pathfinder.MEGACORP.LOCAL
+DEBUG: Using LDAP server: Pathfinder.MEGACORP.LOCAL
+DEBUG: Using base DN: DC=megacorp,DC=local
+INFO: Connecting to LDAP server: Pathfinder.MEGACORP.LOCAL
+
+`
+`
+EBUG: Sid is cached: SVC_BES@MEGACORP.LOCAL
+DEBUG: Found 580 SID: S-1-5-21-1035856440-4137329016-3276773158-1105
+DEBUG: DCE/RPC binding: ncacn_np:10.10.10.30[\PIPE\lsarpc]
+DEBUG: Resolved SID to name: SANDRA@MEGACORP.LOCAL
+DEBUG: Write worker obtained a None value, exiting
+DEBUG: Write worker is done, closing files
+INFO: Done in 00M 09S
+
+```
+Looks like we got info on several accounts sandrs, svc_bes, and administrator
 
 
 
@@ -95,4 +236,5 @@ nmap -sT -Pn -n --open 10.10.10.30 -p389 --script ldap-rootdse
 
 
 [AD-Recon]: https://exploit.ph/active-directory-recon-1.html
+[blood-info]: https://github.com/BloodHoundAD/BloodHound
 
