@@ -21,6 +21,7 @@ admin : qwerty789
 potgres : P@s5w0rd!
 sandra : Password1234!
 svc_bes : Sheffield19
+Daniel : >SNDv*2wzLWf
 ```
 
  
