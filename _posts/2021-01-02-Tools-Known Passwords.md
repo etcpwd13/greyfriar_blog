@@ -23,6 +23,7 @@ sandra : Password1234!
 svc_bes : Sheffield19
 Daniel : >SNDv*2wzLWf
 administrator : Yhk}QE&j<3M
+root : password#1
 ```
 
  
