@@ -1,6 +1,8 @@
 ---
 title: "Writeup: Pathfinder"
-date: 2021-01-02T03:34:30-04:00
+
+date: 2021-01-06T11:34:30-04:00
+
 categories:
   - Blog
   - Writeup
@@ -31,6 +33,7 @@ NMAP
 ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.30 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
  nmap -sC -sV -p$ports 10.10.10.30
  ```
+
 
 Above nmap scan did not work and got an error on ports. Tried to do standard all ports "nmap -p- 10.10.10.30" but that said ports may be blocked by firewall 
 as suggested started scan with host discovery disabled (-Pn) and it returnes results
@@ -405,4 +408,5 @@ C:\Users\Administrator\Desktop>
 [blood-info]: https://github.com/BloodHoundAD/BloodHound
 [impackets]: https://rootsecdev.medium.com/installing-impacket-on-kali-linux-2020-1d9ad69d10bb
 [roasting]: https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/
+
 
