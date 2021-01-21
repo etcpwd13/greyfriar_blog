@@ -9,7 +9,7 @@ tags:
   - LFI
   - RFI
   - link
-link: http://www.compciv.org/recipes/cli/downloading-with-curl/
+link: https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/File%20Inclusion/README.md
 ---
 
 # File Inclusion
