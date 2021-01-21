@@ -20,6 +20,13 @@ For testing purposes, you have permission to scan the host scanme.nmap.org. This
 The command below first scans all ports on an IP and then for the ones open goes bace and enumerates the open ports with the "-sc " and "-sV" switches for the ports in the "$ports" variable list:
 
 ```yaml
+## Nmap fast scan for the most 1000tcp ports used
+nmap -sV -sC -O -T4 -n -Pn -oA fastscan <IP> 
+## Nmap fast scan for all the ports
+nmap -sV -sC -O -T4 -n -Pn -p- -oA fullfastscan <IP> 
+## Nmap fast scan for all the ports slower to avoid failures due to -T4
+nmap -sV -sC -O -p- -n -Pn -oA fullscan <IP>
+
 ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.27 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
  nmap -sC -sV -p$ports 10.10.10.27 
 ```
