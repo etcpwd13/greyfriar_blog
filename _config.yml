@@ -58,7 +58,7 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "GREYFRIAR"
+  name   : "Torgrim Gjermund"
   avatar : "/assets/images/yarl_torgrim.jpg"
   bio    : "Tinker, Soldier, Professor, Cyber, Red Team, Intel, Forensic, Jack of all trades."
   links:
