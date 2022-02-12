@@ -19,7 +19,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
-twitter_username: etcpwd13
+twitter_username: ShellSherpa
 github_username: etcpwd13
 minimal_mistakes_skin: dark
 search: true
@@ -59,7 +59,7 @@ plugins:
 
 author:
   name   : "GREYFRIAR"
-  avatar : "/assets/images/friar.jfif"
+  avatar : "/assets/images/yarl_torgrim.jpg"
   bio    : "Tinker, Soldier, Professor, Cyber, Red Team, Intel, Forensic, Jack of all trades."
   links:
     - label: "Website"
